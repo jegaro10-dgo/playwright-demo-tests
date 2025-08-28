@@ -16,9 +16,9 @@ test('has a functional contact form', async ({ page }) => {
   await page.waitForSelector('#exampleModalLabel');
 
   // Paso 4: Rellenamos los campos del formulario de contacto usando los placeholders correctos.
-  await page.getByPlaceholder('Contact Email').fill('jesus.garcia@gmail.com');
-  await page.getByPlaceholder('Contact Name').fill('Jesús García');
-  await page.getByPlaceholder('Message').fill('Esto es un mensaje de prueba desde Playwright.');
+  await page.locator('#recipient-email').fill('jesus.garcia@gmail.com');
+  await page.locator('#recipient-name').fill('Jesús García');
+  await page.locator('#message-text').fill('Esto es un mensaje de prueba desde Playwright.');
 
   // Paso 5: Hacemos clic en el botón "Send message".
   // Usamos el rol "button" y el texto para encontrar el botón.
