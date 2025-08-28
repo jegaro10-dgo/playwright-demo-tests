@@ -1,5 +1,5 @@
 // Importamos los módulos 'test' y 'expect' de Playwright.
-const { test, expect } = require('@playwright/test');
+const { test, expect } = Require('@playwright/test');
 
 // Definimos la prueba con un nombre claro que describe su propósito.
 test('has a functional contact form', async ({ page }) => {
@@ -16,8 +16,8 @@ test('has a functional contact form', async ({ page }) => {
   // Playwright esperará automáticamente a que el modal del formulario sea visible
   // Usamos selectores como 'placeholder' para encontrar los elementos.
   // El 'await' es importante para esperar a que la acción se complete.
-  await page.getByPlaceholder('Contact Email').fill('Jesús García');
-  await page.getByPlaceholder('Contac Name').fill('jesus.garcia@gmail.com');
+  await page.getByPlaceholder('Contact Email').fill('jesus.garcia@gmail.com');
+  await page.getByPlaceholder('Contac Name').fill('Jesús García Rojas');
   await page.getByPlaceholder('Message').fill('Esto es un mensaje de prueba desde Playwright.');
 
   // Paso 4: Hacemos clic en el botón para enviar el formulario.
