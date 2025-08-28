@@ -10,7 +10,7 @@ test('has title', async ({ page }) => {
 
   // Espera a que la página se cargue completamente y verifica que el título sea 'Google'.
   // 'expect' es una aserción que detendrá el test si la condición no se cumple.
-  await expect(page).toHaveTitle(/wikipedia/);
+  await expect(page).toHaveTitle(/Google/);
 
   // Opcional: Tomamos una captura de pantalla y la guardamos en la carpeta 'test-results/screenshots'.
   // Esto es útil para verificar visualmente que la prueba se ejecutó.
