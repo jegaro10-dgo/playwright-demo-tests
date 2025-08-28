@@ -1,0 +1,44 @@
+name: Playwright Tests
+
+# El 'trigger' que le dice a GitHub cuándo ejecutar este flujo.
+# En este caso, se ejecutará en cada 'push' (cuando subas código).
+on:
+  push:
+    branches: [ main ]
+
+# Define los 'jobs' (o tareas) que se ejecutarán.
+# Un flujo de trabajo puede tener uno o más jobs.
+jobs:
+  # 'test' es el nombre de nuestro job.
+  test:
+    # 'runs-on' le dice a GitHub qué sistema operativo usar.
+    # 'ubuntu-latest' es la máquina virtual más común y confiable.
+    runs-on: ubuntu-latest
+
+    # 'steps' es una lista de las acciones que se ejecutarán secuencialmente.
+    steps:
+      # Paso 1: 'actions/checkout@v4' es una acción de GitHub.
+      # Se usa para descargar el código de tu repositorio en la máquina virtual.
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Paso 2: 'actions/setup-node@v4' es otra acción de GitHub.
+      # Se usa para instalar Node.js en la máquina virtual.
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Paso 3: Instalamos las dependencias del proyecto.
+      # 'run' ejecuta un comando directamente en la terminal de la máquina virtual.
+      - name: Install dependencies
+        run: npm ci
+
+      # Paso 4: Instalamos los navegadores que Playwright necesita.
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+
+      # Paso 5: Ejecutamos nuestra prueba.
+      # Este comando es el mismo que usaste en tu máquina local.
+      - name: Run Playwright tests
+        run: npx playwright test
