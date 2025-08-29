@@ -15,29 +15,27 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
   console.log('Clic en el producto completado.');
 
   // Paso 3: Esperamos a que la página del producto se cargue.
-  console.log('Paso 3: Esperando a que el botón "Add to cart" sea visible...');
-  await page.waitForSelector('text=Add to cart');
-  console.log('Botón "Add to cart" visible. Página del producto cargada.');
+  console.log('Esperando a que el botón "Add to cart" esté visible...');
+  const addToCartButton = page.getByRole('button', { name: 'Add to cart' });
+  await expect(addToCartButton).toBeVisible();
 
   // Paso 4: Manejamos el cuadro de diálogo (alert) de éxito antes de hacer clic.
   console.log('Paso 4: Configurando el listener para la alerta...');
   page.on('dialog', async dialog => {
     // Verificamos el mensaje de éxito de la alerta.
-    console.log(`Alerta detectada con el mensaje: "${dialog.message()}"`);
-    expect(dialog.message()).toContain('Product added.');
-    // Aceptamos la alerta para que la ejecución continúe.
+     await expect(dialog.message()).toContain('Product added.');
+    // Acepta la alerta (simula hacer clic en "OK")
     await dialog.accept();
-    console.log('Alerta aceptada.');
+    console.log('Alerta de confirmación aceptada.');
   });
 
   // Paso 5: Hacemos clic en el botón "Add to cart".
-  console.log('Paso 5: Haciendo clic en el botón "Add to cart"...');
-  const addToCartButton = page.getByRole('button',{ name: 'Add to cart'});
-  console.log('Clic en "Add to cart" completado.');
+  console.log('Haciendo clic en el botón "Add to cart"...');
+  await addToCartButton.click();
 
   // Paso 6: Navegamos a la página del carrito.
   console.log('Paso 6: Navegando a la página del carrito...');
-  await addToCartButton.click();
+  await page.getByRole('link', { name: 'Cart' }).click();
   console.log('Navegación al carrito completada.');
 
   // Paso 7: Esperamos a que la tabla del carrito sea visible.
