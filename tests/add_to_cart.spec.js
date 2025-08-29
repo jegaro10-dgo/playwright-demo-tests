@@ -9,8 +9,8 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
 
   // Paso 2: Localiza y haz clic en el producto "Samsung galaxy s6"
   console.log('Paso 2: Buscando el producto "Samsung galaxy s6" y haciendo clic...');
-  // Nota: Usamos `getByText` en lugar de `getByRole` para ser más flexibles con el tipo de etiqueta.
-  await page.getByText('Samsung galaxy s6').click();
+  // Nota: Volvemos a usar getByRole('link', ...) para ser específicos y evitar el "strict mode violation".
+  await page.getByRole('link', { name: 'Samsung galaxy s6' }).click();
 
   // Paso 3: Espera explícitamente a que la URL de la página del producto cargue
   // Esto asegura que Playwright no intente buscar el botón antes de que la página haya cambiado.
@@ -19,7 +19,6 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
   
   // Paso 4: Localiza el botón "Add to cart" con un selector más robusto
   console.log('Paso 4: Buscando el botón "Add to cart"...');
-  // Usamos un selector que busca por el texto y su id.
   const addToCartButton = page.locator('#tbodyid >> text=Add to cart');
 
   // Aseguramos que el botón es visible antes de interactuar con él
