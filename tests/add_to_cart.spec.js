@@ -1,51 +1,52 @@
-// Importamos los módulos 'test' y 'expect' de Playwright.
+// En tu archivo de prueba (ej: tests/add_to_cart.spec.js)
 const { test, expect } = require('@playwright/test');
 
-// Definimos la prueba para el flujo de "Añadir al carrito".
 test('adds a product to the cart and verifies it', async ({ page }) => {
 
-  // Paso 1: Navegamos a la página principal del sitio.
+  // Paso 1: Navega a la página principal del sitio
+  await page.goto('https://www.demoblaze.com');
   console.log('Paso 1: Navegando a la página principal...');
-  await page.goto('https://www.demoblaze.com/');
-  console.log('Navegación completada.');
 
-  // Paso 2: Hacemos clic en el primer producto de la lista.
+  // Paso 2: Localiza y haz clic en el producto "Samsung galaxy s6"
   console.log('Paso 2: Buscando el producto "Samsung galaxy s6" y haciendo clic...');
-  await page.getByRole('link', { name: 'Samsung galaxy s6' }).click();
-  console.log('Clic en el producto completado.');
+  // Nota: Usamos `getByText` en lugar de `getByRole` para ser más flexibles con el tipo de etiqueta.
+  await page.getByText('Samsung galaxy s6').click();
 
-  // Paso 3: Esperamos a que la página del producto se cargue.
-  console.log('Esperando a que el botón "Add to cart" esté visible...');
-  const addToCartButton = page.getByRole('button', { name: 'Add to cart' });
+  // Paso 3: Espera explícitamente a que la URL de la página del producto cargue
+  // Esto asegura que Playwright no intente buscar el botón antes de que la página haya cambiado.
+  console.log('Paso 3: Esperando a que la página del producto cargue...');
+  await page.waitForURL('**/prod.html*');
+  
+  // Paso 4: Localiza el botón "Add to cart" con un selector más robusto
+  console.log('Paso 4: Buscando el botón "Add to cart"...');
+  // Usamos un selector que busca por el texto y su id.
+  const addToCartButton = page.locator('#tbodyid >> text=Add to cart');
+
+  // Aseguramos que el botón es visible antes de interactuar con él
   await expect(addToCartButton).toBeVisible();
+  console.log('Botón "Add to cart" visible y listo para interactuar.');
 
-  // Paso 4: Manejamos el cuadro de diálogo (alert) de éxito antes de hacer clic.
-  //console.log('Paso 4: Configurando el listener para la alerta...');
-  //page.on('dialog', async dialog => {
-    // Verificamos el mensaje de éxito de la alerta.
-     //await expect(dialog.message()).toContain('Product added.');
-    //// Acepta la alerta (simula hacer clic en "OK")
-    //await dialog.accept();
-    //console.log('Alerta de confirmación aceptada.');
- // });
+  // Paso 5: Configura el listener para la alerta antes de hacer clic.
+  page.on('dialog', async dialog => {
+    // Verifica que el mensaje de la alerta sea el esperado
+    await expect(dialog.message()).toContain('Product added.');
+    // Acepta la alerta (simula hacer clic en "OK")
+    await dialog.accept();
+    console.log('Alerta de confirmación aceptada.');
+  });
 
-  // Paso 5: Hacemos clic en el botón "Add to cart".
-  console.log('Haciendo clic en el botón "Add to cart"...');
+  // Paso 6: Haz clic en el botón "Add to cart"
   await addToCartButton.click();
+  console.log('Clic en "Add to cart" completado.');
 
-  // Paso 6: Navegamos a la página del carrito.
-  console.log('Paso 6: Navegando a la página del carrito...');
+  // Paso 7: Navega a la página del carrito
+  console.log('Paso 7: Navegando a la página del carrito...');
   await page.getByRole('link', { name: 'Cart' }).click();
   console.log('Navegación al carrito completada.');
 
-  // Paso 7: Esperamos a que la tabla del carrito sea visible.
-  console.log('Paso 7: Esperando a que la tabla del carrito sea visible...');
-  await page.waitForSelector('#tbodyid');
-  console.log('Tabla del carrito visible.');
-
-  // Paso 8: Verificamos que el producto esté en la tabla del carrito.
-  console.log('Paso 8: Verificando que el producto "Samsung galaxy s6" esté en el carrito...');
-  await expect(page.getByRole('cell', { name: 'Samsung galaxy s6' })).toBeVisible();
-  console.log('Verificación completada. La prueba terminó con éxito.');
-
+  // Paso 8: Verifica que el producto "Samsung galaxy s6" esté en el carrito
+  console.log('Paso 8: Verificando que el producto esté en el carrito...');
+  const cartTable = page.locator('#tbodyid');
+  await expect(cartTable.getByRole('cell', { name: 'Samsung galaxy s6' })).toBeVisible();
+  console.log('¡Test completado exitosamente!');
 });
