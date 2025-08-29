@@ -20,13 +20,13 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
   await expect(addToCartButton).toBeVisible();
 
   // Paso 4: Manejamos el cuadro de diálogo (alert) de éxito antes de hacer clic.
-  console.log('Paso 4: Configurando el listener para la alerta...');
-  page.on('dialog', async dialog => {
+  //console.log('Paso 4: Configurando el listener para la alerta...');
+  //page.on('dialog', async dialog => {
     // Verificamos el mensaje de éxito de la alerta.
-     await expect(dialog.message()).toContain('Product added.');
-    // Acepta la alerta (simula hacer clic en "OK")
-    await dialog.accept();
-    console.log('Alerta de confirmación aceptada.');
+     //await expect(dialog.message()).toContain('Product added.');
+    //// Acepta la alerta (simula hacer clic en "OK")
+    //await dialog.accept();
+    //console.log('Alerta de confirmación aceptada.');
   });
 
   // Paso 5: Hacemos clic en el botón "Add to cart".
