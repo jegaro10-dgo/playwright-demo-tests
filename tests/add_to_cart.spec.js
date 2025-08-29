@@ -27,7 +27,7 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
     //// Acepta la alerta (simula hacer clic en "OK")
     //await dialog.accept();
     //console.log('Alerta de confirmación aceptada.');
-  });
+ // });
 
   // Paso 5: Hacemos clic en el botón "Add to cart".
   console.log('Haciendo clic en el botón "Add to cart"...');
