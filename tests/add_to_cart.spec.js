@@ -9,7 +9,7 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
 
   // Paso 2: Localiza y haz clic en el producto "Samsung galaxy s6"
   console.log('Paso 2: Buscando el producto "Samsung galaxy s6" y haciendo clic...');
-  // Nota: Volvemos a usar getByRole('link', ...) para ser específicos y evitar el "strict mode violation".
+  // Usamos getByRole('link', ...) para ser específicos y evitar el "strict mode violation".
   await page.getByRole('link', { name: 'Samsung galaxy s6' }).click();
 
   // Paso 3: Espera explícitamente a que la URL de la página del producto cargue
@@ -40,7 +40,8 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
 
   // Paso 7: Navega a la página del carrito
   console.log('Paso 7: Navegando a la página del carrito...');
-  await page.getByRole('link', { name: 'Cart' }).click();
+  // La corrección clave: Usamos { exact: true } para asegurarnos de que solo se selecciona el enlace 'Cart' y no 'Add to cart'.
+  await page.getByRole('link', { name: 'Cart', exact: true }).click();
   console.log('Navegación al carrito completada.');
 
   // Paso 8: Verifica que el producto "Samsung galaxy s6" esté en el carrito
