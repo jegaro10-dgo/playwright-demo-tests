@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test');
-const { faker } = require('@faker-js/faker');
+import { test, expect } from '@playwright/test';
+import { faker } from '@faker-js/faker';
 
 test('user registration with random data', async ({ page }) => {
 
