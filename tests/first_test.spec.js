@@ -1,6 +1,6 @@
 // Importamos las funciones 'test' y 'expect' de Playwright.
 // 'test' define un bloque de prueba y 'expect' se usa para las aserciones.
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 // Definimos un bloque de prueba. El primer argumento es una descripción del test.
 test('has title', async ({ page }) => {

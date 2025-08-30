@@ -1,5 +1,5 @@
 // Importamos los módulos 'test' y 'expect' de Playwright.
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 // Definimos la prueba con un nombre claro que describe su propósito.
 test('has a functional contact form', async ({ page }) => {

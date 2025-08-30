@@ -1,5 +1,5 @@
 // En tu archivo de prueba (ej: tests/add_to_cart.spec.js)
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test('adds a product to the cart and verifies it', async ({ page }) => {
 
