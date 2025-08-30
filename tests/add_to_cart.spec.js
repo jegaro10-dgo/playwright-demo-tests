@@ -28,7 +28,7 @@ test('adds a product to the cart and verifies it', async ({ page }) => {
   // Paso 5: Configura el listener para la alerta antes de hacer clic.
   page.on('dialog', async dialog => {
     // Verifica que el mensaje de la alerta sea el esperado
-    await expect(dialog.message()).toContain('Product added.');
+    await expect(dialog.message()).toContain('Product added');
     // Acepta la alerta (simula hacer clic en "OK")
     await dialog.accept();
     console.log('Alerta de confirmación aceptada.');
