@@ -1,17 +1,21 @@
 import { test, expect } from '@playwright/test';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // --- CONFIGURACIÓN ---
 // Define los índices de los usuarios que quieres probar (empezando desde 0)
 // Ejemplo: [0, 4] para el primer y quinto usuario
 // Ejemplo: [0, 1, 2, 3, 4] para los primeros 5 usuarios
-const usersToTest = [0, 4]; // Puedes cambiar esto a tu gusto
+const usersToTest = [0, 1]; // Se puede cambiar esto segun se requiere probar
 // --- FIN DE CONFIGURACIÓN ---
 
 // Función para leer todos los usuarios del archivo de texto
 function readAllUsers() {
-  const filePath = path.join(__dirname, 'usuarios_registrados.txt');
+  const filePath = path.join(__dirname, '..', 'usuarios_registrados.txt');
   const fileContent = fs.readFileSync(filePath, 'utf-8');
   
   const userBlocks = fileContent.trim().split('--- Usuario Registrado ');
@@ -99,22 +103,43 @@ for (const user of testUsers) {
     console.log('Paso 9: El producto "Fiction" se encuentra en el carrito de compras');
 
     // Paso 10: Iniciar el proceso de checkout
+    //await page.locator('select#CountryId').selectOption({ value: '53' });
+    //console.log('Pais seleccionado');
+    //await page.locator('#ZipPostalCode').fill('01234');
+
     await page.locator('#termsofservice').check();
+    console.log('Términos de servicio seleccionados');
     await page.locator('#checkout').click();
     console.log('Paso 10: Iniciando el proceso de pago');
 
     // Pasos de checkout (el usuario ya está logueado)
+    //await page.locator('#BillingNewAddress_CountryId').selectOption('Mexico');
+    //await page.locator('#BillingNewAddress_City').fill('Mexico City');
+    //await page.locator('#BillingNewAddress_Address1').fill('123 Test St');
+    //await page.locator('#BillingNewAddress_ZipPostalCode').fill('01234');
+    //await page.locator('#BillingNewAddress_PhoneNumber').fill('555-123-4567');
+    await page.getByRole('button', { name: 'Continue' }).click();
+    console.log('Paso 11: Datos de facturación completados.');
+
+    await expect(page.getByRole('button', { name: 'Continue', exact: true })).not.toBeDisabled(); // Método de envío
+    console.log('El botón "Continue" está ahora habilitado');
     await page.getByRole('button', { name: 'Continue', exact: true }).click();
-    await page.getByRole('button', { name: 'Continue', exact: true }).click();
+    console.log('Datos de envio completados');
     await page.locator('#shippingoption_0').check();
-    await page.getByRole('button', { name: 'Continue', exact: true }).click();
-    await page.getByRole('button', { name: 'Continue', exact: true }).click();
-
-    // Confirmar la orden
-    await page.getByRole('button', { name: 'Confirm', exact: true }).click();
-    console.log('Orden confirmada.');
-
-    // Paso 11: Verificar el mensaje de confirmación final
+    console.log('Método de pago seleccionado');
+    await expect(page.getByRole('button', { name: 'Continue', exact: true})).not.toBeDisabled(); // Método de pago
+    console.log('El botón "Continue" está ahora habilitado');
+    await page.getByRole('button', { name: 'Continue', exact: true}).click(); // Información de pago
+    console.log('Método de pago completado');
+    await expect(page.getByRole('button', { name: 'Continue', exact: true})).not.toBeDisabled(); 
+    await page.getByRole('button', { name: 'Continue', exact: true}).click(); 
+    console.log('Información de pago completa');
+    await expect(page.getByRole('button', { name: 'Continue', exact: true})).not.toBeDisabled(); 
+    await page.getByRole('button', { name: 'Continue', exact: true}).click(); 
+    console.log('Pasando a la confirmación de la orden');
+    await page.getByRole('button', { name: 'Confirm', exact: true}).click(); // Confirmación de la orden
+    console.log('Paso 11: Confirmación de la orden.');
+    // Paso 12: Verificar el mensaje de confirmación final de la orden
     await expect(page.getByText('Your order has been successfully processed!')).toBeVisible();
     console.log('¡La compra se ha completado exitosamente!');
   });
