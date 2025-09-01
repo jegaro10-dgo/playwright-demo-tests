@@ -1,17 +1,48 @@
 import { test, expect } from '@playwright/test';
 import { faker } from '@faker-js/faker';
+import fs from 'fs/promises'; // Importamos el módulo fs/promises
 
 test('user registration with random data', async ({ page }) => {
 
   // Generar datos aleatorios con Faker.js
   const randomFirstName = faker.person.firstName();
   const randomLastName = faker.person.lastName();
-  const randomEmail = faker.internet.email();
-  const password = 'Password123!';
+  const randomEmail = faker.internet.email({ firstName: randomFirstName, lastName: randomLastName });
+  const password = faker.internet.password({ length: 8, pattern: /[a-zA-Z0-9!@#$%^&*()_+]/ });
+
+  // Leer el archivo para determinar el nuevo número de registro
+  let registrationNumber = 1;
+  try {
+    const fileContent = await fs.readFile('usuarios_registrados.txt', 'utf-8');
+    const userEntries = fileContent.split(/--- Usuario Registrado \d+ ---/).filter(entry => entry.trim() !== '');
+    registrationNumber = userEntries.length + 1;
+  } catch (error) {
+    // Si el archivo no existe o está vacío, el número de registro será 1
+  }
+
+  // Crear la cadena de texto con los datos del usuario
+  const userData = `
+  --- Usuario Registrado ${registrationNumber} ---
+  Nombre: ${randomFirstName} 
+  Apellidos: ${randomLastName}
+  Email: ${randomEmail}
+  Contraseña: ${password}
+  --------------------------
+  \n`;
+
+  // Guardar los datos en un archivo
+  try {
+    await fs.appendFile('usuarios_registrados.txt', userData);
+    console.log(`Datos del usuario ${registrationNumber} guardados exitosamente en usuarios_registrados.txt`);
+  } catch (error) {
+    console.error('Error al guardar los datos del usuario:', error);
+  }
 
   console.log(`Registrando nuevo usuario con:
-    Nombre: ${randomFirstName} ${randomLastName}
-    Email: ${randomEmail}`);
+    Nombre: ${randomFirstName} 
+    Apellido: ${randomLastName}
+    Email: ${randomEmail}
+    Contraseña: ${password}`);
 
   // Paso 1: Navegar a la página de registro
   await page.goto('https://demowebshop.tricentis.com/register');

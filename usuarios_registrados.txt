@@ -1,0 +1,80 @@
+
+  --- Usuario Registrado 1 ---
+  Nombre: Warren 
+  Apellidos: Flatley
+  Email: Warren_Flatley22@gmail.com
+  Contraseña: #kDOdCPS
+  --------------------------
+  
+
+  --- Usuario Registrado 2 ---
+  Nombre: Iliana 
+  Apellidos: Upton-Schowalter
+  Email: Iliana_Upton-Schowalter78@yahoo.com
+  Contraseña: AMf&jvYX
+  --------------------------
+  
+
+  --- Usuario Registrado 3 ---
+  Nombre: Kenna 
+  Apellidos: Hackett-Prohaska
+  Email: Kenna_Hackett-Prohaska@hotmail.com
+  Contraseña: r+kH#tAa
+  --------------------------
+  
+
+  --- Usuario Registrado 4 ---
+  Nombre: Sarina 
+  Apellidos: Wyman
+  Email: Sarina_Wyman@yahoo.com
+  Contraseña: ^cAZZhpJ
+  --------------------------
+  
+
+  --- Usuario Registrado 5 ---
+  Nombre: Darrell 
+  Apellidos: Reichel
+  Email: Darrell.Reichel@gmail.com
+  Contraseña: RX4$oNJp
+  --------------------------
+  
+
+  --- Usuario Registrado 6 ---
+  Nombre: Rigoberto 
+  Apellidos: Ankunding
+  Email: Rigoberto.Ankunding25@gmail.com
+  Contraseña: $uEA93&C
+  --------------------------
+  
+
+  --- Usuario Registrado 7 ---
+  Nombre: Eulah 
+  Apellidos: Hoppe
+  Email: Eulah_Hoppe71@hotmail.com
+  Contraseña: A1CtS1Kc
+  --------------------------
+  
+
+  --- Usuario Registrado 8 ---
+  Nombre: Constance 
+  Apellidos: Heaney
+  Email: Constance_Heaney@yahoo.com
+  Contraseña: !y^z%0mR
+  --------------------------
+  
+
+  --- Usuario Registrado 9 ---
+  Nombre: Turner 
+  Apellidos: Orn
+  Email: Turner.Orn@yahoo.com
+  Contraseña: Z@xaMvAH
+  --------------------------
+  
+
+  --- Usuario Registrado 10 ---
+  Nombre: Peter 
+  Apellidos: Franey
+  Email: Peter_Franey86@gmail.com
+  Contraseña: O6fGPkQ+
+  --------------------------
+  
