@@ -77,7 +77,6 @@ test('addds a product to the cart and complete checkout', async ({ page }) => {
     console.log('Pasando a la confirmación de la orden');
     await page.getByRole('button', { name: 'Confirm', exact: true}).click(); // Confirmación de la orden
     console.log('Paso 11: Confirmación de la orden.');
-    
     // Paso 12: Verificar el mensaje de confirmación final de la orden
     await expect(page.getByText('Your order has been successfully processed!')).toBeVisible();
     console.log('¡La compra se ha completado exitosamente!');
