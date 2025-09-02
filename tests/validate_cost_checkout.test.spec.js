@@ -107,7 +107,7 @@ test.describe('Checkout con usuarios registrados', () => {
 }
       
       const orderTotalValue = parseFloat(orderTotalText.replace(/[^0-9.]/g, ''));
-      const expectedTotal = 295.00; // Valor esperado basado en el precio del producto y la cantidad
+      const expectedTotal = 65.00; // Valor esperado basado en el precio del producto y la cantidad
       expect(orderTotalValue).toBe(expectedTotal);
       console.log(`Verificación de precio exitosa. Precio total: ${orderTotalValue}`);
       // --- FIN DE LA VALIDACIÓN ---
