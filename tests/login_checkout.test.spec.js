@@ -113,19 +113,21 @@ for (const user of testUsers) {
     console.log('Paso 10: Iniciando el proceso de pago');
 
     const billingForm = page.locator('#BillingNewAddress_CountryId');
+      try {
+        // Esperar a que el formulario de facturación esté visible por 5 segundos
+        await billingForm.waitFor({ state: 'visible', timeout: 5000 });
+        console.log('Detectado: El formulario de facturación está visible. Rellenando datos.');
 
-    // Si el formulario está visible, significa que hay que llenarlo
-    if (await billingForm.isVisible()) {
-        console.log('Detectado: Se necesita rellenar los datos de facturación.');
         await page.locator('#BillingNewAddress_CountryId').selectOption('Mexico');
         await page.locator('#BillingNewAddress_City').fill('Mexico City');
         await page.locator('#BillingNewAddress_Address1').fill('123 Test St');
         await page.locator('#BillingNewAddress_ZipPostalCode').fill('01234');
         await page.locator('#BillingNewAddress_PhoneNumber').fill('555-123-4567');
-        console.log('Paso 11: Datos de facturación completados.');
-    } else {
-      console.log('Los datos de facturación ya existen. Saltando el llenado del formulario.');
-    }
+        
+        } catch (error) {
+        // Si el formulario no aparece en 5 segundos, significa que no es necesario llenarlo
+        console.log('Los datos de facturación ya existen o la página cargó de manera diferente. Continuando.');
+        }
     await page.getByRole('button', { name: 'Continue' }).click();
     console.log('Paso 11: Datos de facturación completados.');
 
