@@ -112,12 +112,20 @@ for (const user of testUsers) {
     await page.locator('#checkout').click();
     console.log('Paso 10: Iniciando el proceso de pago');
 
-    // Pasos de checkout (el usuario ya está logueado)
-    //await page.locator('#BillingNewAddress_CountryId').selectOption('Mexico');
-    //await page.locator('#BillingNewAddress_City').fill('Mexico City');
-    //await page.locator('#BillingNewAddress_Address1').fill('123 Test St');
-    //await page.locator('#BillingNewAddress_ZipPostalCode').fill('01234');
-    //await page.locator('#BillingNewAddress_PhoneNumber').fill('555-123-4567');
+    const billingForm = page.locator('#BillingNewAddress_CountryId');
+
+    // Si el formulario está visible, significa que hay que llenarlo
+    if (await billingForm.isVisible()) {
+        console.log('Detectado: Se necesita rellenar los datos de facturación.');
+        await page.locator('#BillingNewAddress_CountryId').selectOption('Mexico');
+        await page.locator('#BillingNewAddress_City').fill('Mexico City');
+        await page.locator('#BillingNewAddress_Address1').fill('123 Test St');
+        await page.locator('#BillingNewAddress_ZipPostalCode').fill('01234');
+        await page.locator('#BillingNewAddress_PhoneNumber').fill('555-123-4567');
+        console.log('Paso 11: Datos de facturación completados.');
+    } else {
+      console.log('Los datos de facturación ya existen. Saltando el llenado del formulario.');
+    }
     await page.getByRole('button', { name: 'Continue' }).click();
     console.log('Paso 11: Datos de facturación completados.');
 
