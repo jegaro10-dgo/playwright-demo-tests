@@ -58,6 +58,28 @@ test.describe('Checkout con usuarios registrados', () => {
       await expect(page.getByRole('link', { name: 'Log out' })).toBeVisible();
       console.log('Login exitoso.');
 
+      //Validar el carrito antes de empezar
+      console.log('Verificando y limpiando el carrito de compras');
+      await page.getByRole('link', { name: 'Shopping cart', exact: true }).click();
+      
+      const removeButtons = page.locator('button.remove-from-cart');
+      const removeCount = await removeButtons.count();
+
+      if (removeCount > 0) {
+        console.log(`Se encontraron ${removeCount} productos en el carrito. Eliminándolos...`);
+        for (let i = 0; i < removeCount; i++) {
+          await removeButtons.nth(i).click();
+        }
+        // Esperamos a que el mensaje de carrito vacío aparezca
+        await expect(page.getByText('Your Shopping Cart is empty!')).toBeVisible();
+        console.log('Carrito limpiado con éxito.');
+      } else {
+        console.log('El carrito ya está vacío. Continuando.');
+      }
+
+      // Regresamos a la página principal para continuar con el flujo
+      await page.goto('https://demowebshop.tricentis.com/');
+
       await page.locator('#small-searchterms').fill('Fiction');
       console.log('Paso 4: Agregando producto al buscador');
       await page.getByRole('button', { name: 'Search' }).click();
